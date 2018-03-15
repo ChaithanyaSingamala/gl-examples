@@ -10,7 +10,7 @@ project(${NAME})
 include_directories(../${PATH_ENTERNAL_DIR}/glm)
 include_directories(src/)
 include_directories(../common/)
-include_directories(../${PATH_TARGET_DIR}/${TARGET_NAME}/usr/include)
+include_directories(../${PATH_TARGET_DIR}/${TARGET_NAME}/usr/include) 
 
 link_directories(../${PATH_TARGET_DIR}/${TARGET_NAME}/usr/lib)
 link_directories(../${PATH_TARGET_DIR}/${TARGET_NAME}/usr/lib/${CMAKE_BUILD_TYPE})
@@ -19,6 +19,7 @@ link_directories(../${PATH_TARGET_DIR}/${TARGET_NAME}/usr/lib/${CMAKE_BUILD_TYPE
 if(WIN32)
     source_group("src" REGULAR_EXPRESSION "src/*")
     source_group("common" REGULAR_EXPRESSION "../common/*")
+    source_group("platform" REGULAR_EXPRESSION "../platform/*")
 	source_group("glm" REGULAR_EXPRESSION "../${PATH_ENTERNAL_DIR}/glm/glm/*")
 endif(WIN32)
 

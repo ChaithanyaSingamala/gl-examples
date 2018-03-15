@@ -1,10 +1,11 @@
 #include <jni.h>
 #include <string>
+#include <application.h>
 
-#include "gl/glrenderer.h"
-#include "common/application_base.h"
+#include "platform.h"
 #include "AndroidHelper.h"
-#include "gl/android_interface.h"
+#include "android_interface.h"
+
 
 extern "C"
 JNIEXPORT jstring
@@ -17,8 +18,8 @@ Java_gles_opengl_MainActivity_stringFromJNI(
     return env->NewStringUTF(hello.c_str());
 }
 
-static Renderer *renderer = nullptr;
-static AndroidInterface *androidInterface = nullptr;
+static Application *application;
+static AndroidInterface *appInterface;
 
 extern "C"
 JNIEXPORT void JNICALL
@@ -28,9 +29,11 @@ Java_gles_opengl_MyRenderer_nativeSurfaceCreate(
         jobject assetManager) {
 
     AndroidHelper::setEnvAndAssetManager(env, assetManager);
-    renderer = new GLRenderer();
-    ApplicationBase::RegisterApplications(renderer);
-    ApplicationBase::ActiveApplication()->Init();
+
+    appInterface = new AndroidInterface();
+
+    application = new Application(appInterface);
+    application->Init();
 
 
 }
@@ -42,11 +45,10 @@ Java_gles_opengl_MyRenderer_nativeSurfaceChange(
         jclass type,
         jint width,
         jint height) {
-   // androidInterface->Width(width);
-  //  androidInterface->Height(height);
 
-    ApplicationBase::ActiveApplication()->ViewportChanged(width,height);
-
+ //   appInterface->Height(height);
+  //  appInterface->Width(width);
+   // application->ViewportChanged(width,height);
 }
 
 extern "C"
@@ -55,8 +57,9 @@ Java_gles_opengl_MyRenderer_nativeDrawFrame(
         JNIEnv *env,
         jclass type) {
 
-    ApplicationBase::ActiveApplication()->Update();
-    ApplicationBase::ActiveApplication()->Render();
+  //  application->Update();
+ //   application->Render();
+ //   appInterface->Update();
 
 
 }

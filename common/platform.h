@@ -5,3 +5,7 @@
 typedef  EGLInterface Interface;
 #endif
 
+#ifdef ANDROID_BUILD
+#include "android_interface.h"
+typedef  AndroidInterface Interface;
+#endif

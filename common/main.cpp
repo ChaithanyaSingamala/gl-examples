@@ -1,10 +1,21 @@
 #include <iostream>
 #include "application.h"
-#include "log.h"
+#include "helper.h"
 
 int main(int argc, char **argv)
 {
-	Application::CreateRunApplication();
+	Interface *appInterface = new Interface();
+
+	Application *application = new Application(appInterface);
+	application->Init();
+
+	while (!appInterface->IsExit()) {
+		application->Update();
+		application->Render();
+		appInterface->Update();
+	}
+
+	delete application;
 
 	return 0;
 }

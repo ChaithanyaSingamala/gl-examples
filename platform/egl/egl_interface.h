@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 #include "EGL\egl.h"
-#include "log.h"
+#include "helper.h"
 
 class EGLInterface
 {
