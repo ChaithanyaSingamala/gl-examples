@@ -27,3 +27,5 @@
 std::string ReadFromFile(std::string _filename);
 
 void PrintOGLESInfo(bool printExtensions=false);
+
+long currentTimeInMS();
