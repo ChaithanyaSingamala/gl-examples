@@ -5,9 +5,12 @@
 int main(int argc, char **argv)
 {
 	Interface *appInterface = new Interface();
+	PrintOGLESInfo();
 
-	Application *application = new Application(appInterface);
+	Application *application = createApplication();
+	application->SetInterface(appInterface);
 	application->Init();
+
 
 	while (!appInterface->IsExit()) {
 		application->Update();

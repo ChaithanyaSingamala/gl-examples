@@ -1,6 +1,7 @@
 #include <jni.h>
 #include <string>
 #include <application.h>
+#include <helper.h>
 
 #include "platform.h"
 #include "AndroidHelper.h"
@@ -31,9 +32,10 @@ Java_gles_opengl_MyRenderer_nativeSurfaceCreate(
     AndroidHelper::setEnvAndAssetManager(env, assetManager);
 
     appInterface = new AndroidInterface();
-
-    application = new Application(appInterface);
-    application->Init();
+	PrintOGLESInfo();
+	application = createApplication();
+	application->SetInterface(appInterface);
+	application->Init();
 
 
 }
@@ -46,9 +48,9 @@ Java_gles_opengl_MyRenderer_nativeSurfaceChange(
         jint width,
         jint height) {
 
- //   appInterface->Height(height);
-  //  appInterface->Width(width);
-   // application->ViewportChanged(width,height);
+    appInterface->Height(height);
+    appInterface->Width(width);
+    application->ViewportChanged(width,height);
 }
 
 extern "C"
@@ -57,9 +59,9 @@ Java_gles_opengl_MyRenderer_nativeDrawFrame(
         JNIEnv *env,
         jclass type) {
 
-  //  application->Update();
- //   application->Render();
- //   appInterface->Update();
+    application->Update();
+    application->Render();
+    appInterface->Update();
 
 
 }

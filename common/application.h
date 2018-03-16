@@ -4,16 +4,18 @@
 #include <vector>
 class Application
 {
-protected:
-	Interface *appInterface;
 public:
-	Application(Interface *_appInterface);
-	virtual ~Application();
-
-	virtual void Init();
-	virtual void Update();
-	virtual void Render();
-	virtual void ViewportChanged(int _width, int _height);
+	Application() {}
+	virtual ~Application() {}
+	Interface *appInterface;
+	virtual void SetInterface(Interface *_appInterface) { appInterface = _appInterface; }
+	virtual void Init() = 0;
+	virtual void Update() = 0;
+	virtual void Render() = 0;
+	virtual void ViewportChanged(int _width, int _height) = 0;
 
 };
+
+//need to create by example application
+extern Application *createApplication();
 

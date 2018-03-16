@@ -4,7 +4,7 @@
 #define ENABLE_LOG 1
 
 #ifdef ENABLE_LOG
-#if BUILD_ANDRIOD
+#if ANDROID_BUILD
 #include <android/log.h>
 	#define  LOG_TAG    "OpenGLES-android"
 	#define  Log(...)   __android_log_print(ANDROID_LOG_INFO,LOG_TAG,__VA_ARGS__)
@@ -25,3 +25,5 @@
 #endif
 
 std::string ReadFromFile(std::string _filename);
+
+void PrintOGLESInfo(bool printExtensions=false);
