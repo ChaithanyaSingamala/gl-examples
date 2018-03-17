@@ -41,7 +41,6 @@ void PrintOGLESInfo(bool printExtensions)
 		Log("GL Extensions %s", (const char *)glGetString(GL_EXTENSIONS));
 }
 
-
 #ifdef _WIN32
 
 // MSVC defines this in winsock2.h!?

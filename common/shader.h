@@ -10,12 +10,16 @@
 
 class Shader
 {
+	struct locationData {
+		int loc;
+		GLenum type; //data type
+	};
 	unsigned int programId = 0;
 	unsigned int vertShaderId = 0;
 	unsigned int fragShaderId = 0;
 
 	std::map<std::string, int> attributeLocs;
-	std::map<std::string, int> uniformLocs;
+	std::map<std::string, locationData> uniformLocs;
 
 	unsigned int	CompileShaderCode(std::string _shaderCode, unsigned int _shaderType);
 public:
@@ -28,6 +32,7 @@ public:
 	void CompileShaderCode(std::string _shaderCodeVert, std::string _shaderCodeFrag);
 
 	int GetUniformLocation(std::string _uniform);
+	bool SetUniform(std::string _uniform, const GLfloat * value, int count=1);
 	int GetAttribLocation(std::string _attrib);
 	void Set();
 	void Reset();

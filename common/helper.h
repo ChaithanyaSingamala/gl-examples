@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include <assert.h>
 
 #define ENABLE_LOG 1
 
@@ -27,5 +28,7 @@
 std::string ReadFromFile(std::string _filename);
 
 void PrintOGLESInfo(bool printExtensions=false);
+
+void PrintEGLInfo(bool printExtensions = false);
 
 long currentTimeInMS();

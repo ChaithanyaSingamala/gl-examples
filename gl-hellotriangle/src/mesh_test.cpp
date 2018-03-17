@@ -68,10 +68,16 @@ Mesh * MeshTestApplication::CreateNewModelCube(Shader *_shader)
 		indices.push_back(36 - i - 1);
 	}
 
-	mesh = new Mesh(vertexArray, indices, 3,
-		_shader->GetAttribLocation("vertexPosition"), 0, 3, 8,
-		_shader->GetAttribLocation("vertexNormal"), 3, 3, 8,
-		_shader->GetAttribLocation("UV0"), 6, 2, 8);
+
+
+	mesh = new Mesh(vertexArray, indices, 
+		{
+			{ _shader->GetAttribLocation("vertexPosition"), 0, 3, 8 },
+			{ _shader->GetAttribLocation("vertexColor"), 0, 3, 8 },/*temply use position as color value*/
+			{ _shader->GetAttribLocation("vertexNormal"), 3, 3, 8, },
+			{ _shader->GetAttribLocation("UV0"), 6, 2, 8 },
+		}
+	);
 
 	return mesh;
 }
@@ -82,10 +88,13 @@ void MeshTestApplication::Init()
 
 	camera = new OrbitCamera();
 
-    shader = new Shader("res/shaders/simple.vert", "res/shaders/simple.frag");
+    shader = new Shader("res/shaders/simple_mvp.vert", "res/shaders/simple.frag");
     shader->Set();
+	shader->SetUniform("color", glm::value_ptr(vec3(1.0)));
 
 	testMesh = CreateNewModelCube(shader);
+
+	prevTime = currentTimeInMS();
 
 }
 
@@ -100,9 +109,16 @@ void MeshTestApplication::Render()
 	long deltaTime = currentTimeInMS() - prevTime;
 	prevTime = currentTimeInMS();
 
+	camera->Orbit(deltaTime * 0.01f);
+
 	perspectiveMatrix = camera->GetPerspectiveMatrix();
 	viewMatrix = camera->GetViewMatrix();
 
+	shader->Set();
+	mat4 mvp = perspectiveMatrix * viewMatrix * testMesh->getTransform()->GetTransfrom();
+	shader->SetUniform("mvp", glm::value_ptr(mvp));
+
+#if 0
 	{
 		static float rot = 0.0;
 		rot += 0.001f * deltaTime;
@@ -127,7 +143,7 @@ void MeshTestApplication::Render()
 		testModelLightSource->Render();
 		shaderForLightSource->Reset();
 	}
-
+#endif
 	
 	testMesh->Render();
 

@@ -15,6 +15,14 @@ class EGLInterface
 	EGLSurface eglWindowSurface = nullptr;
 	EGLContext eglContext = nullptr;
 
+	void PrintEGLInfo(EGLDisplay eglDisplay, bool printExtensions)
+	{
+		Log("EGL Vendor %s", (const char *)eglQueryString(eglDisplay, EGL_VENDOR));
+		Log("EGL Version  %s", (const char *)eglQueryString(eglDisplay, EGL_VERSION));
+		Log("EGL_CLIENT_APIS %s", (const char *)eglQueryString(eglDisplay, EGL_CLIENT_APIS));
+		Log("EGL_EXTENSIONS %s", (const char *)eglQueryString(eglDisplay, EGL_EXTENSIONS));
+	}
+
 	void WinLoop() 
 	{
 		MSG msg = { 0 };
@@ -168,7 +176,7 @@ class EGLInterface
 		EGLint gl_context_attribs[] = {
 #if EGL_OPENGL_ES3_BIT
 			EGL_CONTEXT_MAJOR_VERSION, 3,
-			EGL_CONTEXT_MINOR_VERSION, 2,
+			EGL_CONTEXT_MINOR_VERSION, 0,
 #elif EGL_OPENGL_ES3_BIT_KHR
 			EGL_CONTEXT_MAJOR_VERSION_KHR, 3,
 			EGL_CONTEXT_MINOR_VERSION_KHR, 1,
@@ -190,10 +198,11 @@ class EGLInterface
 #endif
 
 
-
 		eglInitialize(eglDisplay, &majorVersion, &minorVersion);
 
 		eglBindAPI(EGL_OPENGL_ES_API);
+
+		PrintEGLInfo(eglDisplay, true);
 
 		eglGetConfigs(eglDisplay, NULL, 0, &numConfigs);
 

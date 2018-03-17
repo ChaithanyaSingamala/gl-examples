@@ -20,6 +20,7 @@ if(WIN32)
     source_group("src" REGULAR_EXPRESSION "src/*")
     source_group("common" REGULAR_EXPRESSION "../common/*")
     source_group("platform" REGULAR_EXPRESSION "../platform/*")
+    source_group("resources" REGULAR_EXPRESSION "../resources/*")
 	source_group("glm" REGULAR_EXPRESSION "../${PATH_ENTERNAL_DIR}/glm/glm/*")
 endif(WIN32)
 
@@ -33,6 +34,7 @@ file(GLOB_RECURSE HPP_FILES
 							../common/*.h
 							../${PATH_ENTERNAL_DIR}/glm/glm/*.hpp
 							../${PATH_ENTERNAL_DIR}/glm/glm/*.inl
+							../resources/res/shaders/*
 							)
 						
 							

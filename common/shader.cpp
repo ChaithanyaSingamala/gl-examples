@@ -2,7 +2,7 @@
 #include <iostream>
 #include "helper.h"
 
-//#define SHADER_CHECK_STATUS	1
+#define SHADER_CHECK_STATUS	1
 
 #ifdef SHADER_CHECK_STATUS
 bool CheckStatus(unsigned int objectID, PFNGLGETSHADERIVPROC objectPropertyGetterFunc, PFNGLGETSHADERINFOLOGPROC getInfoLogFunc, GLenum statusType);
@@ -57,7 +57,7 @@ void Shader::InitAttributeUniformLocation()
 	for (int i = 0; i < count; i++)
 	{
 		glGetActiveUniform(programId, (GLuint)i, bufSize, &length, &size, &type, name);
-		uniformLocs[name] = glGetUniformLocation(programId, name);
+		uniformLocs[name] = { glGetUniformLocation(programId, name), type};
 		//LogI("Uniform #%d Type: %u Name: %s\n", i, type, name);
 	}
 }
@@ -99,9 +99,33 @@ int Shader::GetUniformLocation(std::string _uniform)
 	}
 	else
 	{
-		return uniformLocs[_uniform];
+		return uniformLocs[_uniform].loc;
 	}
 	return 0;
+}
+
+bool Shader::SetUniform(std::string _uniform, const GLfloat *value, int count)
+{//will return false when uniform not found or when uniform type not supported
+	if (uniformLocs.find(_uniform) == uniformLocs.end())
+	{//not found
+		return false; //not set
+	}
+	else
+	{
+		int location = uniformLocs[_uniform].loc;
+		switch (uniformLocs[_uniform].type) {
+		case GL_FLOAT:				glUniform1fv(location, count, value);				break;
+		case GL_FLOAT_VEC2:			glUniform2fv(location, count, value);				break;
+		case GL_FLOAT_VEC3:			glUniform3fv(location, count, value);				break;
+		case GL_FLOAT_VEC4:			glUniform4fv(location, count, value);				break;
+		case GL_FLOAT_MAT2:			glUniformMatrix2fv(location, count, GL_FALSE, value);				break;
+		case GL_FLOAT_MAT3:			glUniformMatrix3fv(location, count, GL_FALSE, value);				break;
+		case GL_FLOAT_MAT4:			glUniformMatrix4fv(location, count, GL_FALSE, value);				break;
+
+		}
+
+	}
+	return false; //not supported 
 }
 
 int Shader::GetAttribLocation(std::string _attrib)
@@ -115,7 +139,6 @@ int Shader::GetAttribLocation(std::string _attrib)
 	{
 		return attributeLocs[_attrib];
 	}
-	return 0;
 	return 0;
 }
 
@@ -142,8 +165,8 @@ bool CheckStatus(unsigned int objectID, PFNGLGETSHADERIVPROC objectPropertyGette
 
 		GLsizei bufferSize;
 		getInfoLogFunc(objectID, infoLogLength, &bufferSize, buffer);
-		Log("Info: ", "%s", buffer);
-		ASSERT("failed in compile shader");
+		Log("%s", buffer);
+		LogE("failed in compile shader");
 		delete[] buffer;
 		return false;
 	}

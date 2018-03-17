@@ -66,10 +66,11 @@ Mesh * CreateNewModelCube(Shader *_shader)
 		indices.push_back(36 - i - 1);
 	}
 
-	mesh = new Mesh(vertexArray, indices, 3,
-		_shader->GetAttribLocation("vertexPosition"), 0, 3, 8,
-		_shader->GetAttribLocation("vertexNormal"), 3, 3, 8,
-		_shader->GetAttribLocation("UV0"), 6, 2, 8);
+	mesh = new Mesh(vertexArray, indices,
+			{
+				{_shader->GetAttribLocation("vertexPosition"), 0, 3, 8},
+			}
+		);
 
 	return mesh;
 }
