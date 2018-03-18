@@ -73,9 +73,9 @@ Mesh * MeshTestApplication::CreateNewModelCube(Shader *_shader)
 	mesh = new Mesh(vertexArray, indices, 
 		{
 			{ _shader->GetAttribLocation("vertexPosition"), 0, 3, 8 },
-			{ _shader->GetAttribLocation("vertexColor"), 0, 3, 8 },/*temply use position as color value*/
-			{ _shader->GetAttribLocation("vertexNormal"), 3, 3, 8, },
-			{ _shader->GetAttribLocation("UV0"), 6, 2, 8 },
+		//	{ _shader->GetAttribLocation("vertexColor"), 0, 3, 8 },/*temply use position as color value*/
+		//	{ _shader->GetAttribLocation("vertexNormal"), 3, 3, 8, },
+		//	{ _shader->GetAttribLocation("UV0"), 6, 2, 8 },
 		}
 	);
 
@@ -88,7 +88,7 @@ void MeshTestApplication::Init()
 
 	camera = new OrbitCamera();
 
-    shader = new Shader("res/shaders/simple_mvp.vert", "res/shaders/simple.frag");
+    shader = new Shader("res/shaders/simple.vert", "res/shaders/simple.frag");
     shader->Set();
 	shader->SetUniform("color", glm::value_ptr(vec3(1.0)));
 
@@ -116,7 +116,7 @@ void MeshTestApplication::Render()
 
 	shader->Set();
 	mat4 mvp = perspectiveMatrix * viewMatrix * testMesh->getTransform()->GetTransfrom();
-	shader->SetUniform("mvp", glm::value_ptr(mvp));
+	//shader->SetUniform("mvp", glm::value_ptr(mvp));
 
 #if 0
 	{
@@ -153,4 +153,5 @@ void MeshTestApplication::ViewportChanged(int _width, int _height)
 {
     Log("ViewportChanged %d %d", _width, _height);
 	glViewport(0, 0, _width, _height);
+	camera->ViewportChanged(_width, _height);
 }

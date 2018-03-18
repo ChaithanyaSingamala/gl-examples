@@ -8,6 +8,7 @@ set(NAME "GL-HelloTriangle")
 project(${NAME})
 
 include_directories(../${PATH_ENTERNAL_DIR}/glm)
+include_directories(../${PATH_ENTERNAL_DIR}/assimp)
 include_directories(src/)
 include_directories(../common/)
 include_directories(../${PATH_TARGET_DIR}/${TARGET_NAME}/usr/include) 

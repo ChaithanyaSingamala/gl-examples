@@ -10,6 +10,7 @@ int main(int argc, char **argv)
 	Application *application = createApplication();
 	application->SetInterface(appInterface);
 	application->Init();
+	application->ViewportChanged(appInterface->Width(), appInterface->Height());
 
 
 	while (!appInterface->IsExit()) {

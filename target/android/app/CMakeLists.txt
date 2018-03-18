@@ -10,13 +10,23 @@ include_directories(${CURRENT_SOURCE_DIR}/${CURRENT_EXAMPLE}/src/)
 include_directories(${CURRENT_SOURCE_DIR}/common/)
 include_directories(${CURRENT_SOURCE_DIR}/platform/android/)
 include_directories(${CURRENT_SOURCE_DIR}/external/glm)
+include_directories(${CURRENT_SOURCE_DIR}/external/assimp)
 include_directories(src/main/cpp/)
+
+add_definitions(-DASSIMP_ENABLED)
 
 file(GLOB_RECURSE CPP_FILES
                             src/main/cpp/*.cpp
 							${CURRENT_SOURCE_DIR}/${CURRENT_EXAMPLE}/src/*.cpp
 							${CURRENT_SOURCE_DIR}/common/*.cpp
 							)
+
+# shared lib
+set(LIBS_DIR ../../../../src/main/jniLibs)
+add_library(assimp SHARED IMPORTED)
+set_target_properties(assimp PROPERTIES IMPORTED_LOCATION ${LIBS_DIR}/${ANDROID_ABI}/libassimp.so)
+
+
 
 add_library(
              native-lib
@@ -38,4 +48,5 @@ target_link_libraries(
                         GLESv2
                         GLESv3
                         android
+                        assimp
                        ${log-lib} )

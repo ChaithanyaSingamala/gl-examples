@@ -2,7 +2,7 @@
 #include <iostream>
 #include "helper.h"
 
-#define SHADER_CHECK_STATUS	1
+//#define SHADER_CHECK_STATUS	0
 
 #ifdef SHADER_CHECK_STATUS
 bool CheckStatus(unsigned int objectID, PFNGLGETSHADERIVPROC objectPropertyGetterFunc, PFNGLGETSHADERINFOLOGPROC getInfoLogFunc, GLenum statusType);

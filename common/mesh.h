@@ -13,14 +13,6 @@ class Mesh {
 	//will always use index buffer
 	//will create only one vbo
 
-
-	Transform *transform;
-
-	unsigned int voaId = 0;
-	unsigned int vertexCount = 0;
-	unsigned int vboId = 0;
-	unsigned int iboId = 0;
-
 public:
 
 	struct VertexDataLayout {
@@ -29,15 +21,24 @@ public:
 		int size;
 		int offset;
 	};
-
 	long vertexDataEnable = 1;
-#if 0 //old method
-	Mesh(std::vector<float> _vertexData, std::vector<unsigned short> _indices, int _maxAttributes, ...);
-#endif
+	Mesh() {}
 	Mesh(std::vector<float> _vertexData, std::vector<unsigned short> _indices, std::vector<VertexDataLayout> _layoutList);
 	virtual ~Mesh();
 
-	void Render();
+	virtual void Render();
 
-	Transform* getTransform() { return transform; }
+	virtual Transform* getTransform() { return transform; }
+
+protected:
+	Transform *transform;
+
+	unsigned int voaId = 0;
+	unsigned int vertexCount = 0;
+	unsigned int vboId = 0;
+	unsigned int iboId = 0;
+
+	void Load(std::vector<float> _vertexData, std::vector<unsigned short> _indices, std::vector<VertexDataLayout> _layoutList);
+
+
 };

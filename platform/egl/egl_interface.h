@@ -6,8 +6,8 @@
 class EGLInterface
 {
 	bool exit = false;
-	int width = 800;
-	int height = 600;
+	int width = 1280;
+	int height = 480;
 
 	EGLNativeDisplayType display = nullptr;
 	EGLNativeWindowType window = nullptr;
@@ -146,7 +146,7 @@ class EGLInterface
 	void Setup()
 	{
 #ifdef _WIN32
-		WinCreate("OpenGL window", 800, 600);
+		WinCreate("OpenGL window", width, height);
 #endif
 
 		EGLint ogl_attribList[] =

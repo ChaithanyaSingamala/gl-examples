@@ -16,6 +16,7 @@ file(GLOB_RECURSE PLATFORM_CPP_FILES
 
 
 LINK_LIBRARIES( 
+							assimp
 							libEGL 
 							libGLESv2
 						)	
