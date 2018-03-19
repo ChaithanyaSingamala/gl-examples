@@ -19,7 +19,7 @@ void AssimpMeshTestApplication::Init()
 {
 	glClearColor(1.0f, 0.0f, 1.0f, 1.0f);
 
-	textureTest = new Texture("res/textures/checks.png");
+	textureTest = new Texture("res/models/L200-OBJ/truck_color.jpg");
 	camera = new OrbitCamera();
 
     shader = new Shader("res/shaders/simpletexture.vert", "res/shaders/simpletexture.frag");
@@ -30,11 +30,11 @@ void AssimpMeshTestApplication::Init()
 
 	prevTime = currentTimeInMS();
 
-	assimpModel = new AssimpModel("res/models/nanosuit.obj");
+	assimpModel = new AssimpModel("res/models/L200-OBJ/L200-OBJ.obj");
 	assimpModel->getTransform()->SetTransformation(
 		vec3(0.0f, -1.0f, 0.0f),
 		vec3(0.0f, 0.0f, 0.0f),
-		vec3(0.1f, 0.1f, 0.1f)
+		vec3(0.05f, 0.05f, 0.05f)
 	);
 
 	glEnable(GL_DEPTH_TEST);
