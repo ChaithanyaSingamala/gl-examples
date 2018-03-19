@@ -152,6 +152,25 @@ bool Shader::SetUniform(std::string _uniform, const GLint *value, int count)
 	return false; //not supported 
 }
 
+bool Shader::SetUniform(std::string _uniform, const GLint _value)
+{//will return false when uniform not found or when uniform type not supported
+	if (uniformLocs.find(_uniform) == uniformLocs.end())
+	{//not found
+		return false; //not set
+	}
+	else
+	{
+		int location = uniformLocs[_uniform].loc;
+		switch (uniformLocs[_uniform].type) {
+		case GL_INT:				glUniform1i(location, _value);				break;
+		case GL_SAMPLER_2D:			glUniform1i(location, _value);				break;
+
+		}
+
+	}
+	return false; //not supported 
+}
+
 int Shader::GetAttribLocation(std::string _attrib)
 {
 //	return attrribLocations[_attrib];

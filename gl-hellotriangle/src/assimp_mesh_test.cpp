@@ -19,7 +19,7 @@ void AssimpMeshTestApplication::Init()
 {
 	glClearColor(1.0f, 0.0f, 1.0f, 1.0f);
 
-	textureTest = new Texture("res/textures/texture_4.png");
+	textureTest = new Texture("res/textures/checks.png");
 	camera = new OrbitCamera();
 
     shader = new Shader("res/shaders/simpletexture.vert", "res/shaders/simpletexture.frag");
@@ -36,6 +36,8 @@ void AssimpMeshTestApplication::Init()
 		vec3(0.0f, 0.0f, 0.0f),
 		vec3(1.1f, 1.1f, 1.1f)
 	);
+
+	glEnable(GL_DEPTH_TEST);
 
 }
 
@@ -59,7 +61,7 @@ void AssimpMeshTestApplication::Render()
 	textureTest->Bind(0);
 	mat4 mvp = perspectiveMatrix * viewMatrix * assimpModel->getTransform()->GetTransfrom();
 	shader->SetUniform("mvp", glm::value_ptr(mvp));
-	shader->SetUniform("Texture", (int *)textureTest->getHandle());
+	shader->SetUniform("Texture", 0);
 
 	assimpModel->Render(camera);
 

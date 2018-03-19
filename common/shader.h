@@ -34,6 +34,7 @@ public:
 	int GetUniformLocation(std::string _uniform);
 	bool SetUniform(std::string _uniform, const GLfloat * value, int count=1);
 	bool SetUniform(std::string _uniform, const GLint * value, int count=1);
+	bool SetUniform(std::string _uniform, const GLint _value);
 	int GetAttribLocation(std::string _attrib);
 	void Set();
 	void Reset();
