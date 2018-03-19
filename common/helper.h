@@ -31,4 +31,5 @@ void PrintOGLESInfo(bool printExtensions=false);
 
 void PrintEGLInfo(bool printExtensions = false);
 
+void PrintAnyGLError();
 long currentTimeInMS();

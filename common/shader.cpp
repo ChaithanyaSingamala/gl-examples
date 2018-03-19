@@ -2,7 +2,9 @@
 #include <iostream>
 #include "helper.h"
 
-//#define SHADER_CHECK_STATUS	0
+#ifdef _WIN32
+	#define SHADER_CHECK_STATUS	1
+#endif
 
 #ifdef SHADER_CHECK_STATUS
 bool CheckStatus(unsigned int objectID, PFNGLGETSHADERIVPROC objectPropertyGetterFunc, PFNGLGETSHADERINFOLOGPROC getInfoLogFunc, GLenum statusType);
@@ -48,7 +50,7 @@ void Shader::InitAttributeUniformLocation()
 	{
 		glGetActiveAttrib(programId, (GLuint)i, bufSize, &length, &size, &type, name);
 		attributeLocs[name] = glGetAttribLocation(programId, name);
-		//LogI("Attribute #%d Type: %u Name: %s\n", i, type, name);
+		LogI("Attribute #%d Type: %u Name: %s", i, type, name);
 	}
 
 	glGetProgramiv(programId, GL_ACTIVE_UNIFORMS, &count);
@@ -58,7 +60,7 @@ void Shader::InitAttributeUniformLocation()
 	{
 		glGetActiveUniform(programId, (GLuint)i, bufSize, &length, &size, &type, name);
 		uniformLocs[name] = { glGetUniformLocation(programId, name), type};
-		//LogI("Uniform #%d Type: %u Name: %s\n", i, type, name);
+		LogI("Uniform #%d Type: %u Name: %s", i, type, name);
 	}
 }
 
@@ -121,6 +123,28 @@ bool Shader::SetUniform(std::string _uniform, const GLfloat *value, int count)
 		case GL_FLOAT_MAT2:			glUniformMatrix2fv(location, count, GL_FALSE, value);				break;
 		case GL_FLOAT_MAT3:			glUniformMatrix3fv(location, count, GL_FALSE, value);				break;
 		case GL_FLOAT_MAT4:			glUniformMatrix4fv(location, count, GL_FALSE, value);				break;
+
+		}
+
+	}
+	return false; //not supported 
+}
+
+bool Shader::SetUniform(std::string _uniform, const GLint *value, int count)
+{//will return false when uniform not found or when uniform type not supported
+	if (uniformLocs.find(_uniform) == uniformLocs.end())
+	{//not found
+		return false; //not set
+	}
+	else
+	{
+		int location = uniformLocs[_uniform].loc;
+		switch (uniformLocs[_uniform].type) {
+		case GL_INT:				glUniform1iv(location, count, value);				break;
+		case GL_INT_VEC2:			glUniform2iv(location, count, value);				break;
+		case GL_INT_VEC3:			glUniform3iv(location, count, value);				break;
+		case GL_INT_VEC4:			glUniform4iv(location, count, value);				break;
+		case GL_SAMPLER_2D:			glUniform1i(location, *value);						break;
 
 		}
 

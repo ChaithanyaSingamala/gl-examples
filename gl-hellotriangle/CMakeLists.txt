@@ -9,6 +9,7 @@ project(${NAME})
 
 include_directories(../${PATH_ENTERNAL_DIR}/glm)
 include_directories(../${PATH_ENTERNAL_DIR}/assimp)
+include_directories(../${PATH_ENTERNAL_DIR}/stb)
 include_directories(src/)
 include_directories(../common/)
 include_directories(../${PATH_TARGET_DIR}/${TARGET_NAME}/usr/include) 
@@ -23,11 +24,13 @@ if(WIN32)
     source_group("platform" REGULAR_EXPRESSION "../platform/*")
     source_group("resources" REGULAR_EXPRESSION "../resources/*")
 	source_group("glm" REGULAR_EXPRESSION "../${PATH_ENTERNAL_DIR}/glm/glm/*")
+	source_group("stb" REGULAR_EXPRESSION "../${PATH_ENTERNAL_DIR}/stb/*")
 endif(WIN32)
 
 file(GLOB_RECURSE CPP_FILES 
 							src/*.cpp
 							../common/*.cpp
+							../${PATH_ENTERNAL_DIR}/stb/*.cpp
 							)
 							
 file(GLOB_RECURSE HPP_FILES 
@@ -36,6 +39,7 @@ file(GLOB_RECURSE HPP_FILES
 							../${PATH_ENTERNAL_DIR}/glm/glm/*.hpp
 							../${PATH_ENTERNAL_DIR}/glm/glm/*.inl
 							../resources/res/shaders/*
+							../${PATH_ENTERNAL_DIR}/stb/*.h
 							)
 						
 							

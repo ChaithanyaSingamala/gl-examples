@@ -57,32 +57,32 @@ Mesh *AssimpModel::ProcessMesh(aiMesh* mesh, const aiScene* scene)
 
 	for (unsigned int i = 0; i < mesh->mNumVertices; i++)
 	{
-		vertices[0 + i * 8] = mesh->mVertices[i].x;
-		vertices[1 + i * 8] = mesh->mVertices[i].y;
-		vertices[2 + i * 8] = mesh->mVertices[i].z;
+		vertices[0 + i * totalVertexLength] = mesh->mVertices[i].x;
+		vertices[1 + i * totalVertexLength] = mesh->mVertices[i].y;
+		vertices[2 + i * totalVertexLength] = mesh->mVertices[i].z;
 		// Normals
 		if (mesh->mNormals)
 		{
-			vertices[3 + i * 8] = mesh->mNormals[i].x;
-			vertices[4 + i * 8] = mesh->mNormals[i].y;
-			vertices[5 + i * 8] = mesh->mNormals[i].z;
+			vertices[3 + i * totalVertexLength] = mesh->mNormals[i].x;
+			vertices[4 + i * totalVertexLength] = mesh->mNormals[i].y;
+			vertices[5 + i * totalVertexLength] = mesh->mNormals[i].z;
 		}
 		else
 		{
-			vertices[3 + i * 8] = 0.0f;
-			vertices[4 + i * 8] = 0.0f;
-			vertices[5 + i * 8] = 0.0f;
+			vertices[3 + i * totalVertexLength] = 0.0f;
+			vertices[4 + i * totalVertexLength] = 0.0f;
+			vertices[5 + i * totalVertexLength] = 0.0f;
 		}
 
 		if (mesh->mTextureCoords[0]) // Does the mesh contain texture coordinates?
 		{
-			vertices[6 + i * 8] = mesh->mTextureCoords[0][i].x;
-			vertices[7 + i * 8] = mesh->mTextureCoords[0][i].y;
+			vertices[6 + i * totalVertexLength] = mesh->mTextureCoords[0][i].x;
+			vertices[7 + i * totalVertexLength] = mesh->mTextureCoords[0][i].y;
 		}
 		else
 		{
-			vertices[6 + i * 8] = 0.0f;
-			vertices[7 + i * 8] = 0.0f;
+			vertices[6 + i * totalVertexLength] = 0.0f;
+			vertices[7 + i * totalVertexLength] = 0.0f;
 		}
 	}
 	for (unsigned int i = 0; i < mesh->mNumFaces; i++)
@@ -115,8 +115,8 @@ Mesh *AssimpModel::ProcessMesh(aiMesh* mesh, const aiScene* scene)
 	return new Mesh(vertices, indices,
 	{
 		{ 0, 0, 3, 8 },
-		{ 1, 3, 3, 8, },
-		{ 2, 6, 2, 8 },
+		{ 2, 3, 3, 8, },
+		{ 1, 6, 2, 8 },
 	}
 	);
 #if 0

@@ -5,6 +5,7 @@
 #include "orbit_camera.h"
 #include "glm\gtc\type_ptr.hpp"
 #include "assimp_model.h"
+#include "texture.h"
 
 AssimpMeshTestApplication::AssimpMeshTestApplication()
 {
@@ -13,23 +14,27 @@ AssimpMeshTestApplication::AssimpMeshTestApplication()
 AssimpMeshTestApplication::~AssimpMeshTestApplication()
 {
 }
+Texture *textureTest = 0;
 void AssimpMeshTestApplication::Init()
 {
 	glClearColor(1.0f, 0.0f, 1.0f, 1.0f);
 
+	textureTest = new Texture("res/textures/texture_4.png");
 	camera = new OrbitCamera();
 
-    shader = new Shader("res/shaders/simple_mvp.vert", "res/shaders/simple.frag");
+    shader = new Shader("res/shaders/simpletexture.vert", "res/shaders/simpletexture.frag");
     shader->Set();
-	shader->SetUniform("color", glm::value_ptr(vec3(1.0)));
+	textureTest->Bind(0);
+	//	shader->SetUniform("color", glm::value_ptr(vec3(1.0)));
+	shader->SetUniform("Texture", (int *)textureTest->getHandle());
 
 	prevTime = currentTimeInMS();
 
-	assimpModel = new AssimpModel("res/models/nanosuit.obj");
+	assimpModel = new AssimpModel("res/models/box2.obj");
 	assimpModel->getTransform()->SetTransformation(
-		vec3(0.0f, -1.0f, 0.0f),
 		vec3(0.0f, 0.0f, 0.0f),
-		vec3(0.1f, 0.1f, 0.1f)
+		vec3(0.0f, 0.0f, 0.0f),
+		vec3(1.1f, 1.1f, 1.1f)
 	);
 
 }
@@ -51,8 +56,10 @@ void AssimpMeshTestApplication::Render()
 	viewMatrix = camera->GetViewMatrix();
 
 	shader->Set();
+	textureTest->Bind(0);
 	mat4 mvp = perspectiveMatrix * viewMatrix * assimpModel->getTransform()->GetTransfrom();
 	shader->SetUniform("mvp", glm::value_ptr(mvp));
+	shader->SetUniform("Texture", (int *)textureTest->getHandle());
 
 	assimpModel->Render(camera);
 
