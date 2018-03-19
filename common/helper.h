@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <assert.h>
+#include <vector>
 
 #define ENABLE_LOG 1
 
@@ -25,7 +26,8 @@
 #define  LogE(...)  
 #endif
 
-std::string ReadFromFile(std::string _filename);
+//std::string ReadTextFile(std::string _filename);
+std::vector<char> ReadBinaryFile(std::string filename);
 
 void PrintOGLESInfo(bool printExtensions=false);
 

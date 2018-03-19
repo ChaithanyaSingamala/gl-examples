@@ -15,20 +15,43 @@
 #include <stdint.h> // portable: uint64_t   MSVC: __int64 
 #endif
 #include "GLES3\gl3.h"
+#include <vector>
 
 
-std::string ReadFromFile(std::string _filename)
+//std::string ReadTextFile(std::string _filename)
+//{
+//#if ANDROID_BUILD
+//	std::string output = AndroidHelper::openTextFile(_filename.c_str());
+//#else
+//	std::ifstream file(_filename);
+//	if (!file.good())
+//		LogE("fail to open file %s", _filename.c_str());
+//
+//	std::string output = std::string(std::istreambuf_iterator<char>(file), std::istreambuf_iterator<char>());
+//#endif
+//	return output;
+//}
+
+std::vector<char> ReadBinaryFile(std::string filename)
 {
 #if ANDROID_BUILD
-	std::string output = AndroidHelper::openTextFile(_filename.c_str());
+	return AndroidHelper::openFile(filename.c_str());
 #else
-	std::ifstream file(_filename);
-	if (!file.good())
-		LogE("fail to open file %s", _filename.c_str());
+	std::ifstream ifs(filename, std::ios::binary | std::ios::ate);
+	if (!ifs.good())
+		LogE("fail to open file %s", filename.c_str());
 
-	std::string output = std::string(std::istreambuf_iterator<char>(file), std::istreambuf_iterator<char>());
+	std::ifstream::pos_type pos = ifs.tellg();
+
+	std::vector<char>  result(pos);
+
+	ifs.seekg(0, std::ios::beg);
+	ifs.read(&result[0], pos);
+
+	result.push_back('\0');
+
+	return result;
 #endif
-	return output;
 }
 
 void PrintOGLESInfo(bool printExtensions)

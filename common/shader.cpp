@@ -17,8 +17,8 @@ Shader::Shader()
 
 //Shader::Shader(std::string _vertexShaderFile, std::string _fragmentShaderFile, ShaderAttribInfo _vertexAttributeLocs)
 //{
-//	std::string vertShaderCode = ReadFromFile(_vertexShaderFile);
-//	std::string fragShaderCode = ReadFromFile(_fragmentShaderFile);
+//	std::string vertShaderCode = ReadTextFile(_vertexShaderFile);
+//	std::string fragShaderCode = ReadTextFile(_fragmentShaderFile);
 //
 //	CompileShaderCode(vertShaderCode, fragShaderCode);
 //	InitAttribLocations(_vertexAttributeLocs);
@@ -26,8 +26,8 @@ Shader::Shader()
 
 Shader::Shader(std::string _vertexShaderFile, std::string _fragmentShaderFile)
 {
-	std::string vertShaderCode = ReadFromFile(_vertexShaderFile);
-	std::string fragShaderCode = ReadFromFile(_fragmentShaderFile);
+	std::vector<char> vertShaderCode = ReadBinaryFile(_vertexShaderFile);
+	std::vector<char> fragShaderCode = ReadBinaryFile(_fragmentShaderFile);
 
 	CompileShaderCode(vertShaderCode, fragShaderCode);
 
@@ -64,7 +64,7 @@ void Shader::InitAttributeUniformLocation()
 	}
 }
 
-void Shader::CompileShaderCode(std::string _shaderCodeVert, std::string _shaderCodeFrag)
+void Shader::CompileShaderCode(std::vector<char> _shaderCodeVert, std::vector<char> _shaderCodeFrag)
 {
 	vertShaderId = CompileShaderCode(_shaderCodeVert, GL_VERTEX_SHADER);
 	fragShaderId = CompileShaderCode(_shaderCodeFrag, GL_FRAGMENT_SHADER);
@@ -216,10 +216,10 @@ bool CheckStatus(unsigned int objectID, PFNGLGETSHADERIVPROC objectPropertyGette
 	return true;
 }
 #endif
-unsigned int Shader::CompileShaderCode(std::string _shaderCode, unsigned int _shaderType)
+unsigned int Shader::CompileShaderCode(std::vector<char> _shaderCode, unsigned int _shaderType)
 {
 	unsigned int shaderId = glCreateShader(_shaderType);
-	const GLchar* code[1] = { _shaderCode.c_str() };
+	const GLchar* code[1] = { _shaderCode.data() };
 	glShaderSource(shaderId, 1, code, 0);
 	glCompileShader(shaderId);
 

@@ -39,5 +39,22 @@ char *AndroidHelper::openTextFile(const char *path) {
     }
     buffer[length] = '\0';
     return buffer;
-    return NULL;
+}
+
+std::vector<char> AndroidHelper::openFile(const char *path) {
+	AAsset *asset = loadAsset(path);
+	if (asset == NULL) {
+		LOGE("Couldn't load %s", path);
+	}
+	off_t length = AAsset_getLength(asset);
+	std::vector<char>  result(length + 1);
+	//char *buffer = new char[length + 1];
+	int num = AAsset_read(asset, result.data(), length);
+	AAsset_close(asset);
+	if (num != length) {
+		LOGE("Couldn't read %s", path);
+		//   delete[] buffer;
+	}
+	// buffer[length] = '\0';
+	return result;
 }

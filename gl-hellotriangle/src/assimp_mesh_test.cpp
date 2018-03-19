@@ -30,11 +30,11 @@ void AssimpMeshTestApplication::Init()
 
 	prevTime = currentTimeInMS();
 
-	assimpModel = new AssimpModel("res/models/box2.obj");
+	assimpModel = new AssimpModel("res/models/nanosuit.obj");
 	assimpModel->getTransform()->SetTransformation(
+		vec3(0.0f, -1.0f, 0.0f),
 		vec3(0.0f, 0.0f, 0.0f),
-		vec3(0.0f, 0.0f, 0.0f),
-		vec3(1.1f, 1.1f, 1.1f)
+		vec3(0.1f, 0.1f, 0.1f)
 	);
 
 	glEnable(GL_DEPTH_TEST);

@@ -3,6 +3,7 @@
 #include "stb_image.h"
 #include "helper.h"
 
+
 struct Texture::_staticTextureValues Texture::staticValues;
 
 Texture::Texture(std::string _filename)
@@ -12,14 +13,17 @@ Texture::Texture(std::string _filename)
 	unsigned char* image;
 	int req_comp;
 
-	//void *data = ReadBinaryFile(_filename);
+	std::vector<char> data = ReadBinaryFile(_filename);
 
-	image = stbi_load(_filename.c_str(), &width, &height, &req_comp, 0);
+	image = stbi_load_from_memory((unsigned char *)data.data(), data.size(), &width, &height, &req_comp, 0);
+		
 	glGenTextures(1, &textureId);
 
 	Bind();
-
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image);
+	if (req_comp == 4)
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image);
+	else
+		LogE("Texture: Other format not implemented");
 
 	stbi_image_free(image);
 

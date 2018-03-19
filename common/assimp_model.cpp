@@ -9,14 +9,15 @@
 #include "assimp/scene.h"
 #include "assimp/postprocess.h"
 
+
 using namespace std;
 
 
 AssimpModel::AssimpModel(std::string _filename)
 {
-	string dataStr = ReadFromFile(_filename);
-	size_t dataLength = dataStr.length();
-	void* data = (char *)dataStr.c_str();
+	vector<char> dataStr = ReadBinaryFile(_filename);
+	size_t dataLength = dataStr.size();
+	void* data = dataStr.data();
 
 	string ext = _filename.substr(_filename.find_last_of('.'), _filename.length());
 

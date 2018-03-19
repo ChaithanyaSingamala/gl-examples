@@ -21,7 +21,7 @@ class Shader
 	std::map<std::string, int> attributeLocs;
 	std::map<std::string, locationData> uniformLocs;
 
-	unsigned int	CompileShaderCode(std::string _shaderCode, unsigned int _shaderType);
+	unsigned int	CompileShaderCode(std::vector<char> _shaderCode, unsigned int _shaderType);
 public:
 	
 	Shader();
@@ -29,7 +29,7 @@ public:
 	void InitAttributeUniformLocation();
 	virtual ~Shader();
 
-	void CompileShaderCode(std::string _shaderCodeVert, std::string _shaderCodeFrag);
+	void CompileShaderCode(std::vector<char> _shaderCodeVert, std::vector<char> _shaderCodeFrag);
 
 	int GetUniformLocation(std::string _uniform);
 	bool SetUniform(std::string _uniform, const GLfloat * value, int count=1);
