@@ -50,7 +50,7 @@ void Shader::InitAttributeUniformLocation()
 	{
 		glGetActiveAttrib(programId, (GLuint)i, bufSize, &length, &size, &type, name);
 		attributeLocs[name] = glGetAttribLocation(programId, name);
-		LogI("Attribute #%d Type: %u Name: %s", i, type, name);
+		LogI("Attribute #%d Type: %u Name: %s location: %d", i, type, name, attributeLocs[name]);
 	}
 
 	glGetProgramiv(programId, GL_ACTIVE_UNIFORMS, &count);
@@ -60,7 +60,7 @@ void Shader::InitAttributeUniformLocation()
 	{
 		glGetActiveUniform(programId, (GLuint)i, bufSize, &length, &size, &type, name);
 		uniformLocs[name] = { glGetUniformLocation(programId, name), type};
-		LogI("Uniform #%d Type: %u Name: %s", i, type, name);
+		LogI("Uniform #%d Type: %u Name: %s location: %d", i, type, name, uniformLocs[name]);
 	}
 }
 

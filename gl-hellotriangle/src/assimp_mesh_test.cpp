@@ -17,12 +17,13 @@ AssimpMeshTestApplication::~AssimpMeshTestApplication()
 Texture *textureTest = 0;
 void AssimpMeshTestApplication::Init()
 {
-	glClearColor(1.0f, 0.0f, 1.0f, 1.0f);
+	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
 	textureTest = new Texture("res/models/L200-OBJ/truck_color.jpg");
 	camera = new OrbitCamera();
+	camera->SetProjection(43.0f, 1.0f, 6.0f, 0, 0);
 
-    shader = new Shader("res/shaders/simpletexture.vert", "res/shaders/simpletexture.frag");
+    shader = new Shader("res/shaders/lighting01.vert", "res/shaders/lighting01.frag");
     shader->Set();
 	textureTest->Bind(0);
 	//	shader->SetUniform("color", glm::value_ptr(vec3(1.0)));
@@ -61,7 +62,12 @@ void AssimpMeshTestApplication::Render()
 	textureTest->Bind(0);
 	mat4 mvp = perspectiveMatrix * viewMatrix * assimpModel->getTransform()->GetTransfrom();
 	shader->SetUniform("mvp", glm::value_ptr(mvp));
+	shader->SetUniform("model", glm::value_ptr(assimpModel->getTransform()->GetTransfrom()));
 	shader->SetUniform("Texture", 0);
+	glm::mat3 normalMat = assimpModel->getTransform()->GetTransfrom();
+	normalMat = glm::inverse(normalMat);
+	normalMat = glm::transpose(normalMat);
+	shader->SetUniform("normalMatrix", glm::value_ptr(normalMat));
 
 	assimpModel->Render(camera);
 

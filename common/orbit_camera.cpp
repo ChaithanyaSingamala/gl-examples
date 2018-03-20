@@ -72,14 +72,16 @@ void OrbitCamera::Orbit(glm::float32 _speed)
 
 void OrbitCamera::SetProjection(glm::float32 _fov, glm::float32 _near, glm::float32 _far, glm::float32 _width, glm::float32 _height)
 {
-	if (!_fov)
+	if (_fov)
 		fov = _fov;
-	if (!_near)
+	if (_near)
 		nearPlane = _near;
-	if (!_far)
+	if (_far)
 		farPlane = _far;
-	width = _width;
-	height = _height;
+	if (_width)
+		width = _width;
+	if(_height)
+		height = _height;
 
 	UpdateProjectionMatrix();
 }
