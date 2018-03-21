@@ -1,7 +1,7 @@
 #include <helper.h>
 #include "hellotriangle.h"
-#include "shader.h"
-#include "mesh.h"
+#include "shader.hpp"
+#include "mesh.hpp"
 
 HelloTriangleApplication::HelloTriangleApplication()
 {

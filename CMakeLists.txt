@@ -17,7 +17,7 @@ set(PATH_RESOURCE_DIR "resources")
 include(${PATH_TARGET_DIR}/${TARGET_NAME}/toolchain.cmake)
 
 
-add_subdirectory(gl-hellotriangle)
+add_subdirectory(gl-sandbox)
 
 
 

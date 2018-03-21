@@ -1,8 +1,8 @@
 #include <helper.h>
 #include "mesh_test.h"
-#include "shader.h"
-#include "mesh.h"
-#include "orbit_camera.h"
+#include "shader.hpp"
+#include "mesh.hpp"
+#include "orbit_camera.hpp"
 #include "glm\gtc\type_ptr.hpp"
 
 MeshTestApplication::MeshTestApplication()
@@ -115,7 +115,7 @@ void MeshTestApplication::Render()
 	viewMatrix = camera->GetViewMatrix();
 
 	shader->Set();
-	mat4 mvp = perspectiveMatrix * viewMatrix * testMesh->getTransform()->GetTransfrom();
+	mat4 mvp = perspectiveMatrix * viewMatrix * testMesh->getTransform()->Get();
 	//shader->SetUniform("mvp", glm::value_ptr(mvp));
 
 #if 0

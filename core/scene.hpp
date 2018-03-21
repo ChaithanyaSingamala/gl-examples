@@ -1,23 +1,23 @@
 #pragma once
 
-#include "mesh.h"
+#include "mesh.hpp"
 
 
 using namespace glm;
 class Transform;
 class Camera;
 
-class Model {
+class Scene {
 protected:
 	std::vector<Mesh*> meshes;
 	Transform transform;
 
 public:
-	Model() {
+	Scene() {
 
 	}
 
-	virtual void Render(Camera *camera);
+	virtual void Render(Camera *camera) {}
 
 	virtual Transform* getTransform() { return &transform; }
 

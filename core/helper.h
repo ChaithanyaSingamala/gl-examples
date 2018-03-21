@@ -26,12 +26,9 @@
 #define  LogE(...)  
 #endif
 
-//std::string ReadTextFile(std::string _filename);
 std::vector<char> ReadBinaryFile(std::string filename);
 
 void PrintOGLESInfo(bool printExtensions=false);
-
-void PrintEGLInfo(bool printExtensions = false);
 
 void PrintAnyGLError();
 long currentTimeInMS();

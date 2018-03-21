@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.7.1)
 SET(CMAKE_INSTALL_PREFIX "install" CACHE PATH "install prefix" FORCE) 
 
 
-set(NAME "GL-HelloTriangle")
+set(NAME "GL-Sandbox")
 
 project(${NAME})
 
@@ -11,7 +11,7 @@ include_directories(../${PATH_ENTERNAL_DIR}/glm)
 include_directories(../${PATH_ENTERNAL_DIR}/assimp)
 include_directories(../${PATH_ENTERNAL_DIR}/stb)
 include_directories(src/)
-include_directories(../common/)
+include_directories(../core/)
 include_directories(../${PATH_TARGET_DIR}/${TARGET_NAME}/usr/include) 
 
 link_directories(../${PATH_TARGET_DIR}/${TARGET_NAME}/usr/lib)
@@ -20,7 +20,7 @@ link_directories(../${PATH_TARGET_DIR}/${TARGET_NAME}/usr/lib/${CMAKE_BUILD_TYPE
 
 if(WIN32)
     source_group("src" REGULAR_EXPRESSION "src/*")
-    source_group("common" REGULAR_EXPRESSION "../common/*")
+    source_group("core" REGULAR_EXPRESSION "../core/*")
     source_group("platform" REGULAR_EXPRESSION "../platform/*")
     source_group("resources" REGULAR_EXPRESSION "../resources/*")
 	source_group("glm" REGULAR_EXPRESSION "../${PATH_ENTERNAL_DIR}/glm/glm/*")
@@ -29,13 +29,13 @@ endif(WIN32)
 
 file(GLOB_RECURSE CPP_FILES 
 							src/*.cpp
-							../common/*.cpp
+							../core/*.cpp
 							../${PATH_ENTERNAL_DIR}/stb/*.cpp
 							)
 							
 file(GLOB_RECURSE HPP_FILES 
 							src/*.h
-							../common/*.h
+							../core/*.h
 							../${PATH_ENTERNAL_DIR}/glm/glm/*.hpp
 							../${PATH_ENTERNAL_DIR}/glm/glm/*.inl
 							../resources/res/shaders/*

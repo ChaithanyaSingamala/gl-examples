@@ -1,9 +1,9 @@
-#include "application.h"
+#include "application.hpp"
 #include "GLES3\gl3.h"
 #include "glm\glm.hpp"
 
 class Shader;
-class AssimpModel;
+class AssimpScene;
 class Mesh;
 class OrbitCamera;
 
@@ -21,7 +21,7 @@ class AssimpMeshTestApplication : public Application
 	vec3 light1Pos;
 	vec3 lightPos = vec3(1.2f, 1.0f, 2.0f);
 
-	AssimpModel *assimpModel;
+	AssimpScene *assimpModel;
 
 public:
 	virtual void Init() override;

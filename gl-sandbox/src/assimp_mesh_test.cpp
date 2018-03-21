@@ -1,10 +1,10 @@
 #include <helper.h>
 #include "assimp_mesh_test.h"
-#include "shader.h"
-#include "mesh.h"
-#include "orbit_camera.h"
+#include "shader.hpp"
+#include "mesh.hpp"
+#include "orbit_camera.hpp"
 #include "glm\gtc\type_ptr.hpp"
-#include "assimp_model.h"
+#include "assimp_scene.hpp"
 #include "texture.h"
 
 AssimpMeshTestApplication::AssimpMeshTestApplication()
@@ -31,7 +31,7 @@ void AssimpMeshTestApplication::Init()
 
 	prevTime = currentTimeInMS();
 
-	assimpModel = new AssimpModel("res/models/L200-OBJ/L200-OBJ.obj");
+	assimpModel = new AssimpScene("res/models/L200-OBJ/L200-OBJ.obj");
 	assimpModel->getTransform()->SetTransformation(
 		vec3(0.0f, -1.0f, 0.0f),
 		vec3(0.0f, 0.0f, 0.0f),
@@ -60,11 +60,11 @@ void AssimpMeshTestApplication::Render()
 
 	shader->Set();
 	textureTest->Bind(0);
-	mat4 mvp = perspectiveMatrix * viewMatrix * assimpModel->getTransform()->GetTransfrom();
+	mat4 mvp = perspectiveMatrix * viewMatrix * assimpModel->getTransform()->Get();
 	shader->SetUniform("mvp", glm::value_ptr(mvp));
-	shader->SetUniform("model", glm::value_ptr(assimpModel->getTransform()->GetTransfrom()));
+	shader->SetUniform("model", glm::value_ptr(assimpModel->getTransform()->Get()));
 	shader->SetUniform("Texture", 0);
-	glm::mat3 normalMat = assimpModel->getTransform()->GetTransfrom();
+	glm::mat3 normalMat = assimpModel->getTransform()->Get();
 	normalMat = glm::inverse(normalMat);
 	normalMat = glm::transpose(normalMat);
 	shader->SetUniform("normalMatrix", glm::value_ptr(normalMat));

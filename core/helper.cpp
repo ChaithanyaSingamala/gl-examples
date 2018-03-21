@@ -17,21 +17,6 @@
 #include "GLES3\gl3.h"
 #include <vector>
 
-
-//std::string ReadTextFile(std::string _filename)
-//{
-//#if ANDROID_BUILD
-//	std::string output = AndroidHelper::openTextFile(_filename.c_str());
-//#else
-//	std::ifstream file(_filename);
-//	if (!file.good())
-//		LogE("fail to open file %s", _filename.c_str());
-//
-//	std::string output = std::string(std::istreambuf_iterator<char>(file), std::istreambuf_iterator<char>());
-//#endif
-//	return output;
-//}
-
 std::vector<char> ReadBinaryFile(std::string filename)
 {
 #if ANDROID_BUILD
