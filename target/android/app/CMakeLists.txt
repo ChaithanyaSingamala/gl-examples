@@ -3,7 +3,9 @@ cmake_minimum_required(VERSION 3.4.1)
 
 add_definitions( -DANDROID_BUILD)
 
-set(CURRENT_EXAMPLE "gl-hellotriangle")
+add_definitions( -DNO_MAIN_FUNCTION)
+
+set(CURRENT_EXAMPLE "gl-sandbox")
 set(CURRENT_SOURCE_DIR "../../..")
 
 include_directories(${CURRENT_SOURCE_DIR}/${CURRENT_EXAMPLE}/src/)

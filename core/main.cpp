@@ -2,6 +2,7 @@
 #include "application.hpp"
 #include "helper.h"
 
+#ifndef NO_MAIN_FUNCTION
 int main(int argc, char **argv)
 {
 	Interface *appInterface = new Interface();
@@ -23,3 +24,4 @@ int main(int argc, char **argv)
 
 	return 0;
 }
+#endif

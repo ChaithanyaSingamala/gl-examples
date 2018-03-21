@@ -1,6 +1,6 @@
 #include <jni.h>
 #include <string>
-#include <application.h>
+#include <application.hpp>
 #include <helper.h>
 
 #include "platform.h"
